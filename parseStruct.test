@@ -1,0 +1,5 @@
+type IncomeStatement struct {
+	tableName struct{} `json:"-" pg:"income_statement,discard_unknown_columns"`
+	ID        int      `json:"id" pg:"id"`
+	Date      string   `json:"date" pg:"date"`
+}
