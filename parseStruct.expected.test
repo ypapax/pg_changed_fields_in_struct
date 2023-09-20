@@ -1,5 +1,6 @@
-func GetIncomeStatementChangedFields(a, b IncomeStatement) (pgColumns []string) {
-    if a.Date != b.Date {
+func GetIncomeStatementChangedFields(a *IncomeStatement, b IncomeStatement) (pgColumns []string) {
+    if a.Date != b.Date && !utils.IsEmpty(b.Date) {
+        a.Date = b.Date
         pgColumns = append(pgColumns, "date")
     }
     return pgColumns

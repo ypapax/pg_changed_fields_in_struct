@@ -68,9 +68,11 @@ cycle1:
 	}
 	var resultLines []string
 	resultLines = append(resultLines,
-		fmt.Sprintf("func Get%+vChangedFields(a, b %+v) (pgColumns []string) {", structName, structName))
+		fmt.Sprintf("func Get%+vChangedFields(a *%+v, b %+v) (pgColumns []string) {",
+			structName, structName, structName))
 	for _, f := range fields {
-		resultLines = append(resultLines, fmt.Sprintf("    if a.%+v != b.%+v {", f.Name, f.Name))
+		resultLines = append(resultLines, fmt.Sprintf("    if a.%+v != b.%+v && !utils.IsEmpty(b.%+v) {", f.Name, f.Name, f.Name))
+		resultLines = append(resultLines, fmt.Sprintf(`        a.%+v = b.%+v`, f.Name, f.Name))
 		resultLines = append(resultLines, fmt.Sprintf(`        pgColumns = append(pgColumns, "%+v")`, f.Pg))
 		resultLines = append(resultLines, fmt.Sprintf(`    }`))
 	}

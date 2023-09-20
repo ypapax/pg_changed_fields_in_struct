@@ -27,6 +27,7 @@ func Test_parseStruct(t *testing.T) {
 	r.NoError(err)
 	r.NotEmpty(b)
 	a, err := parseStruct(string(b))
+	t.Logf("actual: %+v", a)
 	r.NoError(err)
 	bExp, err := os.ReadFile("parseStruct.expected.test")
 	r.NoError(err)
